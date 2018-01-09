@@ -19,6 +19,7 @@
         , get_top_N_blocks_time_summary/2
         , get_n_headers_from_top/2
         , get_state_trees_for_persistence/1
+        , get_top_state_trees/1
         , hash_is_connected_to_genesis/2
         , has_block/2
         , has_header/2
@@ -271,7 +272,11 @@ find_common_ancestor(Hash1, Hash2, ?assert_state() = State) ->
 get_state_trees_for_persistence(?assert_state() = State) ->
     state_db_to_list(State).
 
--spec new_from_persistence([#block{}|#header{}], [{Hash :: binary(), #trees{}}]) -> state().
+-spec get_top_state_trees(state())->#trees{}.
+get_top_state_trees(?assert_state() = State) ->
+    TopHash = get_top_header_hash(State),
+    state_db_find(TopHash, State).
+
 new_from_persistence(Chain, StateTreesList) ->
     State = state_db_init_from_list(StateTreesList, new()),
     NodeChain = [wrap_block_or_header(X) || X <- Chain],
