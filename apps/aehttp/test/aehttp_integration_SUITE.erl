@@ -1322,7 +1322,7 @@ naming_system_manage_name(_Config) ->
     Name       = <<"fooo.barr.test">>,
     NameSalt  = 12345,
     NameTTL    = 60000,
-    Pointers   = [{account_pubkey, aecore_suite_utils}],
+    Pointers   = <<"{\"account_pubkey\":\"srtrst\"}">>,
     TTL        = 10,
     NHash      = aens_hash:name_hash(Name),
     CHash      = aens_hash:commitment_hash(Name, NameSalt),
